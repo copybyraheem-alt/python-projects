@@ -42,6 +42,6 @@ def run_firewall():
         if again == "n":
             break
         
-if __name__=='__main__':
+if __name__=="__main__":
 
     run_firewall()
