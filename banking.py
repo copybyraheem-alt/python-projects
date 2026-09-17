@@ -30,7 +30,7 @@ def run_bank():
                 print("goodbye")
                 break
             case _:
-                "invaild choice"
+                print("invaild choice")
 
         again= input("choose again? (y/n)")
         if again == "n":
