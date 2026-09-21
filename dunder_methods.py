@@ -14,7 +14,7 @@ class Wallet:
         if calc < 0:
             raise ValueError ("Insufficient funds")
         else:
-            return Wallet (self.amount - other.amount)
+            return Wallet (calc)
 
     def __eq__(self, other):
         if self.amount == other.amount:
@@ -23,7 +23,7 @@ class Wallet:
             return False
 
     def __lt__(self, other):
-        if self.amount> other.amount:
+        if self.amount>= other.amount:
             return False
         else:
             return True
@@ -32,8 +32,8 @@ class Wallet:
 w1=Wallet(50.5)
 w2=Wallet(20.25)
 
+print(w1)
 print(w1+w2)
 print(w1 - w2)
 print(w1 == w2)
-print(w1 - w2)
-
+print(w2<w1)
