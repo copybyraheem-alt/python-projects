@@ -4,7 +4,7 @@ class Wallet:
         self.amount=amount
 
     def __str__(self):
-        return f"Amount ${self.amount:.2f}"
+        return f"${self.amount:.2f}"
 
     def __add__(self, other):
         return Wallet(self.amount + other.amount)
@@ -14,7 +14,7 @@ class Wallet:
         if calc < 0:
             raise ValueError ("Insufficient funds")
         else:
-            return self.amount - other.amount
+            return Wallet (self.amount - other.amount)
 
     def __eq__(self, other):
         if self.amount == other.amount:
