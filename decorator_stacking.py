@@ -15,5 +15,4 @@ def shout(func):
 def greet():
     return "hello world"
 
-
 print(greet())
