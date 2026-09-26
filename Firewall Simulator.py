@@ -15,8 +15,8 @@ def calculate_damage(file_type):
             return 20
         case "phishing":
             return 10
-
-    return file_type
+        case _:
+            return 0
 
 def run_firewall():
     health = 100
@@ -37,6 +37,9 @@ def run_firewall():
         print(f"File was: {caught_data}. it did {damage} damage ")
         print(f"current health: {health}")
 
+        if health <= 0:
+            print("Firewall breached! System offline.")
+            break
 
         again= input("choose again? (y/n)")
         if again == "n":

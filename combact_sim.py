@@ -23,9 +23,12 @@ def weapons():
 
         elif choice== "magic":
                 damage +=25
-        else:
+        elif choice == "q":
                 print("bye")
                 break
+        else:
+                print("Invalid choice, please select a valid weapon.")
+                continue
 
 
         Critical_Multiplier= multi()

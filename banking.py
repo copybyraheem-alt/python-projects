@@ -6,7 +6,6 @@ def run_bank():
 
         match option:
             case 1:
-                f"your balance is {balance}"
                 print(f"your balance is {balance}")
                 
             case 2:
@@ -19,11 +18,10 @@ def run_bank():
                 sub= int(input("how much you wanna withdraw: "))
                 if sub > balance:
                     print("Insufficient funds!")
-                    break
-                    
-                balance -= sub
-                print(f"you have withdrawn {sub} amount")
-                print(f"current balance {balance}")
+                else:
+                    balance -= sub
+                    print(f"you have withdrawn {sub} amount")
+                    print(f"current balance {balance}")
 
             
             case 4:

@@ -46,18 +46,46 @@ while True:
 
     if com_health <= 0:
         print("youu winnnnnn")
+        won_level_1 = True
         break
     elif my_health <= 0:
         print("you lose")
+        won_level_1 = False
         break
 
 
 
-level_2= input("Want to jump into level 2 (y/n): ").lower()
+def boss_attack():
+    boss_moves = ["strike", "gun", "laser", "kick", "throw"]
+    return random.choice(boss_moves)
+
+
+def boss_damage(attack_name):
+    match attack_name:
+        case "strike":
+            return 150
+        case "gun":
+            return 100
+        case "laser":
+            return 200
+        case "kick":
+            return 50
+        case "throw":
+            return 120
+        case _:
+            return 0
+
+
+if won_level_1:
+    level_2 = input("Want to jump into level 2 (y/n): ").lower()
+else:
+    level_2 = "n"
+
 print()
-round= 1
-lvl_2_health=500
-boss_health= 300
+round = 1
+lvl_2_health = 500
+boss_health = 300
+
 while True:
     if level_2 == "n":
         break
@@ -67,47 +95,24 @@ while True:
         print("you wont a weapon here, in order to defeat him you have to dodge him until he is tired")
         print("who is him?, you'll know pretty soon :)")
         print()
-    round+=1
-    def boss_attack():
-        boss_moves = ["strike", "gun", "laser", "kick", "throw"]
-        moves= random.choice(boss_moves)
+    round += 1
 
-        return moves
+    dodge_num = random.randint(1, 10)
+    player_dodge = int(input("guess the number to dodge: "))
 
-    
-    def boss_damage(something):
-        something= boss_attack()
+    boss_att = boss_attack()
+    boss_dam = boss_damage(boss_att)
 
-        match something:
-            case "strike":
-                return 150
-            case "gun":
-                return 100
-            case "laser":
-                return 200
-            case "kick":
-                return 50
-            case "throw":
-                return 120
-            case _:
-                return 0
-
-    dodge_num= random.randint(1, 10)
-
-    player_dodge=int(input("guess the number to dodge: "))
-
-    boss_dam= boss_damage(boss_attack)
-    boss_att= boss_attack()
     print("-------------------------------")
     if player_dodge == dodge_num:
         print("you dodged it, yay!!!")
-        dodge_damage= [20, 30, 50, 5000]
-        picked_damage= random.choice(dodge_damage)
-        boss_health-=picked_damage 
+        dodge_damage = [20, 30, 50, 5000]
+        picked_damage = random.choice(dodge_damage)
+        boss_health -= picked_damage 
         print(f"You delt {picked_damage} damage")
         print(f"The boss health is {boss_health}")
     else:
-        lvl_2_health -=boss_dam
+        lvl_2_health -= boss_dam
         print("wrong guess, you were not able to dodge it")
         print(f"your current health {lvl_2_health}")
         print(f"The boss used {boss_att} and delt you {boss_dam} damage")

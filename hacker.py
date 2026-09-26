@@ -7,7 +7,7 @@ class Laptop:
         self.battry= 100
 
     def write_code(self, hours):
-        self.battry -= hours*15
+        self.battry = max(0, self.battry - hours * 15)
         return f"{self.brand} running {self.os} coded for {hours} hours. battrey is now at {self.battry}%"
 
     def charge(self):

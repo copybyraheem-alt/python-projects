@@ -10,11 +10,14 @@ message = input("enter a letter: ").lower()
 cipher_text=  ""
 
 for letter in message:
-    position = normal.index(letter)
-    secret_num = secret[position]
-    cipher_text+= secret_num
+    if letter in normal:
+        position = normal.index(letter)
+        secret_num = secret[position]
+        cipher_text += secret_num
+    else:
+        cipher_text += letter
 
 
 
-print(f"original messhe: {message}")
+print(f"original message: {message}")
 print(f"Encrypted message: {cipher_text}")
