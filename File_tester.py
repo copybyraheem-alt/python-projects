@@ -5,7 +5,7 @@ import os
 def folder(folder_path):
         size=0
 
-        filename= None
+        File_name= None
         File_size=None
 
         if os.path.exists(folder_path)==False:
