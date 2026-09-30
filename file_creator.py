@@ -26,3 +26,15 @@ class RecordKeeper:
             writer.writerow(["Name", "Score", "passed"])
             for record in self.records:
                 writer.writerow([record["name"], record["score"], record["passed"]])
+
+
+
+r=RecordKeeper()
+
+r.add_record("Raheem", 90, "True")
+r.add_record("Osama", 80, "True")
+r.add_record("Osman", 70, "True")
+
+r.export_txt("records.txt")
+r.export_json("records.json")
+r.export_csv("records.csv")
