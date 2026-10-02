@@ -1,30 +1,41 @@
 secret_word = "apple"
 health = 6
-display = ["_", "_", "_", "_", "_"]
-
+display = ["_"] * len(secret_word)
+guessed_letters = set()
 
 print("-----------HANGMAN----------")
-print(f"guess: {display}")
+print(f"guess: {' '.join(display)}")
 print(f"your health: {health}")
 
 while True:
-    guess = input("guess a letter: ").lower()
-    if guess in secret_word:
-        position= 0
+    guess = input("guess a letter: ").strip().lower()
 
+    if len(guess) != 1 or not guess.isalpha():
+        print("Please enter a single valid letter (a-z)!")
+        continue
+
+    if guess in guessed_letters:
+        print(f"You already guessed '{guess}'! Try a different letter.")
+        continue
+
+    guessed_letters.add(guess)
+
+    if guess in secret_word:
+        position = 0
         for letter in secret_word:
             if letter == guess:
-                display[position]=guess
-            position+=1
+                display[position] = guess
+            position += 1
     else:
         health -= 1
         print("nope guess")
 
     print(f"your current health is: {health}")
-    print(f"guess: {display}")
+    print(f"guess: {' '.join(display)}")
     print("---------------------")
-    if health ==0:
+    if health <= 0:
         print("Game-over!, you died")
+        print(f"The word was: {secret_word}")
         break
     if "_" not in display:
         print("you win")

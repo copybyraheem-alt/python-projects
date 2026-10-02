@@ -7,11 +7,15 @@ class Laptop:
         self.battry= 100
 
     def write_code(self, hours):
+        if hours < 0:
+            return "Hours cannot be negative."
+        if self.battry <= 0:
+            return f"{self.brand} battery is dead! Please charge it first."
         self.battry = max(0, self.battry - hours * 15)
         return f"{self.brand} running {self.os} coded for {hours} hours. battrey is now at {self.battry}%"
 
     def charge(self):
-        self.battry=100
+        self.battry = 100
         return f"laptop is fully charged"
 
 laptop1= Laptop("hp victus", "linux")

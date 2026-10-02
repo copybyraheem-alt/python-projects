@@ -10,9 +10,10 @@ class Book:
         return f"'{self.title}' by {self.author}"
     @classmethod
     def from_string(cls, book_str):
-        formatted=book_str
-        var1,var2= formatted.split("-")
-        return cls(var1, var2)
+        if "-" not in book_str:
+            raise ValueError("Input string must contain '-' separating title and author")
+        var1, var2 = book_str.rsplit("-", 1)
+        return cls(var1.strip(), var2.strip())
     @classmethod
     def get_total_books(cls):
         return cls.total_books

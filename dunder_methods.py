@@ -1,32 +1,35 @@
 class Wallet:
 
     def __init__(self, amount):
-        self.amount=amount
+        if amount < 0:
+            raise ValueError("Wallet balance cannot be negative")
+        self.amount = amount
 
     def __str__(self):
         return f"${self.amount:.2f}"
 
     def __add__(self, other):
+        if not isinstance(other, Wallet):
+            return NotImplemented
         return Wallet(self.amount + other.amount)
 
     def __sub__(self, other):
-        calc= self.amount - other.amount
+        if not isinstance(other, Wallet):
+            return NotImplemented
+        calc = self.amount - other.amount
         if calc < 0:
-            raise ValueError ("Insufficient funds")
-        else:
-            return Wallet (calc)
+            raise ValueError("Insufficient funds")
+        return Wallet(calc)
 
     def __eq__(self, other):
-        if self.amount == other.amount:
-            return True
-        else:
+        if not isinstance(other, Wallet):
             return False
+        return self.amount == other.amount
 
     def __lt__(self, other):
-        if self.amount>= other.amount:
-            return False
-        else:
-            return True
+        if not isinstance(other, Wallet):
+            return NotImplemented
+        return self.amount < other.amount
 
 
 w1=Wallet(50.5)

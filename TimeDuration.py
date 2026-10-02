@@ -19,27 +19,38 @@ class TimeDuration:
 
 
     def __add__(self, other):
+        if not isinstance(other, TimeDuration):
+            return NotImplemented
         return TimeDuration(seconds=self.total_seconds + other.total_seconds)
 
     def __sub__(self, other):
-        calc= self.total_seconds - other.total_seconds
-        if calc <0:
-            raise ValueError ("Time cannot be negative")
+        if not isinstance(other, TimeDuration):
+            return NotImplemented
+        calc = self.total_seconds - other.total_seconds
+        if calc < 0:
+            raise ValueError("Time cannot be negative")
         return TimeDuration(seconds=calc)
 
     def __eq__(self, other):
+        if not isinstance(other, TimeDuration):
+            return False
         return self.total_seconds == other.total_seconds
 
     def __lt__(self, other):
-        return self.total_seconds<other.total_seconds
+        if not isinstance(other, TimeDuration):
+            return NotImplemented
+        return self.total_seconds < other.total_seconds
 
     def __mul__(self, multiplier):
-           if type(multiplier) != int:
-               raise TypeError ("Multiplier must be an integer")
-           else:
-            calc= self.total_seconds * multiplier
+        if not isinstance(multiplier, int):
+            raise TypeError("Multiplier must be an integer")
+        if multiplier < 0:
+            raise ValueError("Multiplier cannot be negative")
+        calc = self.total_seconds * multiplier
+        return TimeDuration(seconds=calc)
 
-           return TimeDuration(seconds=calc)
+    def __rmul__(self, multiplier):
+        return self.__mul__(multiplier)
 
 
 t1=TimeDuration(1, 61, 65)

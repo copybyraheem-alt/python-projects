@@ -20,8 +20,22 @@ class FeeCalculator:
         final_price = Tax
         return final_price
 
-base=float(input("Enter your amount: "))
-discount= float(input("What is the discount in %: "))
-tax= float(input("Enter the tax in %: "))
-print (f"Discounted amount: {FeeCalculator.discount(base, discount):.2f}")
-print (f"Total amount: {FeeCalculator.final_fee(base, discount, tax):.2f}")
+def main():
+    try:
+        base = float(input("Enter your amount: "))
+        discount = float(input("What is the discount in %: "))
+        tax = float(input("Enter the tax in %: "))
+    except ValueError:
+        print("Invalid input: Please enter valid numbers.")
+        return
+
+    if base < 0 or discount < 0 or tax < 0:
+        print("Invalid input: Values cannot be negative.")
+        return
+
+    print(f"Discounted amount: {FeeCalculator.discount(base, discount):.2f}")
+    print(f"Total amount: {FeeCalculator.final_fee(base, discount, tax):.2f}")
+
+
+if __name__ == "__main__":
+    main()

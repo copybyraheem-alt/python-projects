@@ -4,7 +4,7 @@ import os
 def check_path(path):
     if os.path.exists(path):
         if os.path.isfile(path):
-            print(f"File found: {os.path.getsize(path)}")
+            print(f"File found: {os.path.getsize(path)} bytes")
         elif os.path.isdir(path):
             print(f"Folder found: {os.path.getsize(path)} bytes")
     else:

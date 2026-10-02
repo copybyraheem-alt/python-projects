@@ -20,12 +20,15 @@ def damage(something):
 
 my_health = 500
 com_health = 500
+won_level_1 = False
 
 turn = 0
 while True:
     my_try= input("kick, punch, gun, knife?, choose: ").lower()
 
     my_damage = damage(my_try)
+    if my_damage == 0:
+        print("Invalid move! You missed your attack.")
     
 
     com_movee=computer()
@@ -38,13 +41,17 @@ while True:
     com_health -= my_damage
 
     print("--------------------HEALTH-------------------------")
-    print(f"your current health {my_health}")
-    print(f"Computer's current {com_health}")
+    print(f"your current health {max(0, my_health)}")
+    print(f"Computer's current {max(0, com_health)}")
     print("----------------------------------------------------")
     turn += 1
     print(f"This was round {turn}")
 
-    if com_health <= 0:
+    if my_health <= 0 and com_health <= 0:
+        print("Double knockout! It's a draw.")
+        won_level_1 = False
+        break
+    elif com_health <= 0:
         print("youu winnnnnn")
         won_level_1 = True
         break
@@ -77,7 +84,7 @@ def boss_damage(attack_name):
 
 
 if won_level_1:
-    level_2 = input("Want to jump into level 2 (y/n): ").lower()
+    level_2 = input("Want to jump into level 2 (y/n): ").strip().lower()
 else:
     level_2 = "n"
 
@@ -87,7 +94,7 @@ lvl_2_health = 500
 boss_health = 300
 
 while True:
-    if level_2 == "n":
+    if level_2 not in ("y", "yes"):
         break
 
     if round == 1:
@@ -98,7 +105,12 @@ while True:
     round += 1
 
     dodge_num = random.randint(1, 10)
-    player_dodge = int(input("guess the number to dodge: "))
+    while True:
+        try:
+            player_dodge = int(input("guess the number to dodge (1-10): "))
+            break
+        except ValueError:
+            print("Please enter a valid integer number!")
 
     boss_att = boss_attack()
     boss_dam = boss_damage(boss_att)
@@ -110,16 +122,21 @@ while True:
         picked_damage = random.choice(dodge_damage)
         boss_health -= picked_damage 
         print(f"You delt {picked_damage} damage")
-        print(f"The boss health is {boss_health}")
+        print(f"The boss health is {max(0, boss_health)}")
     else:
         lvl_2_health -= boss_dam
         print("wrong guess, you were not able to dodge it")
-        print(f"your current health {lvl_2_health}")
+        print(f"your current health {max(0, lvl_2_health)}")
         print(f"The boss used {boss_att} and delt you {boss_dam} damage")
-        print(f"Boss's current health {boss_health}")
+        print(f"Boss's current health {max(0, boss_health)}")
     print("-------------------------------")
 
-    if lvl_2_health <= 0:
+    if lvl_2_health <= 0 and boss_health <= 0:
+        print("Both you and the boss collapsed! It's a draw.")
+        print("Game over!")
+        print("----------------")
+        break
+    elif lvl_2_health <= 0:
         print("You lostt")
         print("Game over!")
         print("----------------")

@@ -2,21 +2,38 @@ def run_bank():
     balance = 50
 
     while True:
-        option = int(input("Choose an option (1: Balance, 2: Deposit, 3: Withdraw, 4: Quit: "))
+        try:
+            option = int(input("Choose an option (1: Balance, 2: Deposit, 3: Withdraw, 4: Quit): "))
+        except ValueError:
+            print("Invalid input! Please enter a valid number.")
+            continue
 
         match option:
             case 1:
                 print(f"your balance is {balance}")
                 
             case 2:
-                add= int(input(f"How much money you'd like to deposit: "))
-                balance +=add
-                print(f"{add} amount has been depoisted into your account")
-                print(f"current balance {balance}")
+                try:
+                    add = int(input("How much money you'd like to deposit: "))
+                except ValueError:
+                    print("Invalid amount! Please enter a valid number.")
+                    continue
+                if add <= 0:
+                    print("Deposit amount must be positive!")
+                else:
+                    balance += add
+                    print(f"{add} amount has been depoisted into your account")
+                    print(f"current balance {balance}")
                 
             case 3:
-                sub= int(input("how much you wanna withdraw: "))
-                if sub > balance:
+                try:
+                    sub = int(input("how much you wanna withdraw: "))
+                except ValueError:
+                    print("Invalid amount! Please enter a valid number.")
+                    continue
+                if sub <= 0:
+                    print("Withdrawal amount must be positive!")
+                elif sub > balance:
                     print("Insufficient funds!")
                 else:
                     balance -= sub
@@ -30,8 +47,8 @@ def run_bank():
             case _:
                 print("invaild choice")
 
-        again= input("choose again? (y/n)")
-        if again == "n":
+        again= input("choose again? (y/n): ")
+        if again.lower() == "n":
             break
                     
     return option

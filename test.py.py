@@ -1,4 +1,3 @@
-from importlib import readers
 import os
 
 
@@ -6,15 +5,21 @@ def read_scores(path):
     if not os.path.exists(path):
         print(f"File not found: {path}")
         return {}
-    else:
-        scores={} #creating an empty dictionary
-        with open(path, "r") as file:
-            for line in file:
-                line=line.strip()
-                name,score=line.split(",")
-                score=int(score)
-                scores[name]=score
-            return scores
+
+    scores = {}  # creating an empty dictionary
+    with open(path, "r") as file:
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split(",")
+            if len(parts) == 2:
+                name, score = parts[0].strip(), parts[1].strip()
+                try:
+                    scores[name] = int(score)
+                except ValueError:
+                    continue
+    return scores
 
 with open("scores.txt", "w") as file:
     file.write("Alice,90\n")

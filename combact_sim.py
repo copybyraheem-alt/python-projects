@@ -1,46 +1,37 @@
+import random
+
+
 def multi():
-      import random
-
-      Critical_Multiplier = [1, 2, 3,]
-      random_ch = random.choice(Critical_Multiplier)
-
-      return random_ch
+    multipliers = [1, 2, 3]
+    return random.choice(multipliers)
 
 
 
 def weapons():
     while True:
-        choice = input("sword, bow, magic, (q) quit: ").lower()
+        choice = input("sword, bow, magic, (q) quit: ").strip().lower()
 
-        damage=0
-        
-    
+        damage = 0
+
         if choice == "sword":
-                damage +=15
-
+            damage = 15
         elif choice == "bow":
-                damage +=10
-
-        elif choice== "magic":
-                damage +=25
+            damage = 10
+        elif choice == "magic":
+            damage = 25
         elif choice == "q":
-                print("bye")
-                break
+            print("bye")
+            break
         else:
-                print("Invalid choice, please select a valid weapon.")
-                continue
+            print("Invalid choice, please select a valid weapon.")
+            continue
 
+        critical_multiplier = multi()
+        total_damage = damage * critical_multiplier
 
-        Critical_Multiplier= multi()
+        print(f"you used {choice}!, multiplier was {critical_multiplier} you delt {total_damage} damage")
 
-        
-        damage *=Critical_Multiplier
-
-        print(f"you used {choice}!, multiplier was {Critical_Multiplier} you delt {damage} damage")
-
-
-
-        again = input("choose again/ (y/n)")
+        again = input("choose again? (y/n): ").strip().lower()
         if again == "n":
             break
 
