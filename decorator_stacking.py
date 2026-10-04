@@ -1,11 +1,17 @@
+from functools import wraps
+
+
 def bold(func):
-    def wrapper():
-        return f"***{func()}***"
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        return f"***{func(*args, **kwargs)}***"
     return wrapper
 
+
 def shout(func):
-    def wrapper():
-        result=func()
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
         return result.upper()
     return wrapper
 
@@ -15,4 +21,6 @@ def shout(func):
 def greet():
     return "hello world"
 
-print(greet())
+
+if __name__ == "__main__":
+    print(greet())

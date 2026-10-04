@@ -25,33 +25,27 @@ class Hero:
 
     def heal(self):
         if self.health >= 100:
-            return f"you dont need to heal, you are already at {self.health}"
+            return f"You don't need to heal, you are already at {self.health}"
 
-        if Hero.party_gold < 40:
-            return f"Not enough gold!: {Hero.party_gold} available, 40 needed."
+        cost = 20 if (self.health + 40 > 100) else 40
+        if Hero.party_gold < cost:
+            return f"Not enough gold!: {Hero.party_gold} available, {cost} needed."
 
         future_health = self.health + 40
         if future_health > 100:
             self.health = 100
-            Hero.party_gold -= 20
-            return f"Your health has been recovered to 100, and used 20 gold, Total gold: {Hero.party_gold}"
+            Hero.party_gold -= cost
+            return f"{self.name}'s health has been recovered to 100, and used {cost} gold, Total gold: {Hero.party_gold}"
         else:
             self.health = future_health
-            Hero.party_gold -= 40
+            Hero.party_gold -= cost
             return f"{self.name} regained 40 health. Health: {self.health}, Gold: {Hero.party_gold}"
 
-        
-dude1=(Hero("dude"))
 
-print(dude1.take_damage(50))
-print(dude1.heal())
-print(dude1.heal())
-print(dude1.heal())
+if __name__ == "__main__":
+    dude1 = Hero("dude")
 
-
-
-        
-
-        
-        
-
+    print(dude1.take_damage(50))
+    print(dude1.heal())
+    print(dude1.heal())
+    print(dude1.heal())

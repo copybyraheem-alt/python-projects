@@ -1,3 +1,7 @@
+from functools import total_ordering
+
+
+@total_ordering
 class Wallet:
 
     def __init__(self, amount):
@@ -7,6 +11,9 @@ class Wallet:
 
     def __str__(self):
         return f"${self.amount:.2f}"
+
+    def __repr__(self):
+        return f"Wallet({self.amount})"
 
     def __add__(self, other):
         if not isinstance(other, Wallet):
@@ -32,11 +39,12 @@ class Wallet:
         return self.amount < other.amount
 
 
-w1=Wallet(50.5)
-w2=Wallet(20.25)
+if __name__ == "__main__":
+    w1 = Wallet(50.5)
+    w2 = Wallet(20.25)
 
-print(w1)
-print(w1+w2)
-print(w1 - w2)
-print(w1 == w2)
-print(w2<w1)
+    print(w1)
+    print(w1 + w2)
+    print(w1 - w2)
+    print(w1 == w2)
+    print(w2 < w1)

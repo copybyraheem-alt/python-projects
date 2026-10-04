@@ -1,6 +1,7 @@
 def items():
-    item=['sword', 'shield', 'potion', 'armor']
+    item = ['sword', 'shield', 'potion', 'armor']
     return item
+
 
 def pricing(item_name):
     match item_name:
@@ -21,26 +22,26 @@ def run_shop():
     inventory = []
 
     while True:
-        menu = input("1.view shop, 2.Buy item, 3. View inventory, 4. View gold, 5. Quit: ").strip()
+        menu = input("1. View shop, 2. Buy item, 3. View inventory, 4. View gold, 5. Quit: ").strip()
 
         if menu == "1":
             print(items())
         elif menu == "2":
             print(items())
-            my_choice = input("choose your item: ").strip().lower()
+            my_choice = input("Choose your item: ").strip().lower()
             cost = pricing(my_choice)
             if cost is None:
                 print("Item not in shop!")
             elif gold >= cost:
                 inventory.append(my_choice)
-                print(f"you choose {my_choice} and the cost was {cost}")
+                print(f"You chose {my_choice} and the cost was {cost}")
                 gold -= cost
                 print(f"Total gold left: {gold}")
-                print(f"Your inventory {inventory}")
+                print(f"Your inventory: {inventory}")
             else:
                 print("Insufficient gold!")
         elif menu == "3":
-            print(f"Your inventory {inventory}")
+            print(f"Your inventory: {inventory}")
         elif menu == "4":
             print(f"Total gold left: {gold}")
         elif menu == "5":
@@ -52,6 +53,3 @@ def run_shop():
 
 if __name__ == "__main__":
     run_shop()
-
-
-

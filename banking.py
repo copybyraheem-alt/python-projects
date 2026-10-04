@@ -14,7 +14,7 @@ def run_bank():
                 
             case 2:
                 try:
-                    add = int(input("How much money you'd like to deposit: "))
+                    add = float(input("How much money you'd like to deposit: "))
                 except ValueError:
                     print("Invalid amount! Please enter a valid number.")
                     continue
@@ -22,12 +22,12 @@ def run_bank():
                     print("Deposit amount must be positive!")
                 else:
                     balance += add
-                    print(f"{add} amount has been depoisted into your account")
+                    print(f"{add} amount has been deposited into your account")
                     print(f"current balance {balance}")
                 
             case 3:
                 try:
-                    sub = int(input("how much you wanna withdraw: "))
+                    sub = float(input("how much you wanna withdraw: "))
                 except ValueError:
                     print("Invalid amount! Please enter a valid number.")
                     continue
@@ -45,13 +45,13 @@ def run_bank():
                 print("goodbye")
                 break
             case _:
-                print("invaild choice")
+                print("invalid choice")
 
-        again= input("choose again? (y/n): ")
-        if again.lower() == "n":
+        again = input("choose again? (y/n): ").strip().lower()
+        if again in ("n", "no"):
             break
                     
-    return option
+    return balance
 
 if __name__ == "__main__":
     run_bank()

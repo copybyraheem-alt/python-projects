@@ -1,36 +1,29 @@
 def calculate_average(values):
-    Total=0
-    count=0
+    total = 0
+    count = 0
 
     for value in values:
         try:
-            value= float(value)
-            Total += value
-            count+=1
+            val = float(value)
+            total += val
+            count += 1
         except ValueError:
             print(f"Skipping invalid value: {value}")
         except TypeError:
             print(f"Skipping wrong type: {value}")
-
         finally:
             print(f"Processed: count= {count}, Current value= {value}")
             print("----------------------------------------------------")
 
-
-
-    if count ==0:
+    if count == 0:
         print("No valid values to average")
-        return 0
+        return 0.0
     else:
-        average= Total/count
+        average = total / count
         return average
-        
 
-print(calculate_average([10, "20", 30, "hello", None, "40"]))
-print("---------NEW ROUND---------------")
-print(calculate_average(["a", "b", None]))
 
-    
-
-            
-
+if __name__ == "__main__":
+    print(calculate_average([10, "20", 30, "hello", None, "40"]))
+    print("---------NEW ROUND---------------")
+    print(calculate_average(["a", "b", None]))

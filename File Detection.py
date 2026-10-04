@@ -4,13 +4,21 @@ import os
 def check_path(path):
     if os.path.exists(path):
         if os.path.isfile(path):
-            print(f"File found: {os.path.getsize(path)} bytes")
+            try:
+                print(f"File found: {os.path.getsize(path)} bytes")
+            except OSError:
+                print("File found")
         elif os.path.isdir(path):
-            print(f"Folder found: {os.path.getsize(path)} bytes")
+            try:
+                print(f"Folder found: {os.path.getsize(path)} bytes")
+            except OSError:
+                print("Folder found")
+        else:
+            print("Path exists")
     else:
         print("Path not found")
 
 
-
-check_path(".")
-check_path("banking.py")
+if __name__ == "__main__":
+    check_path(".")
+    check_path("banking.py")

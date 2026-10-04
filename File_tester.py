@@ -1,43 +1,49 @@
-
 import os
 
 
 def folder(folder_path):
-        size = -1
+    size = -1
+    file_name = None
+    file_size = None
 
-        File_name = None
-        File_size = None
+    if not os.path.exists(folder_path):
+        print("The folder does not exist")
+        return
 
-        if os.path.exists(folder_path) == False:
-                print("The folder does not exist")
-                return
+    if not os.path.isdir(folder_path):
+        print("The path is not a folder")
+        return
 
-        elif os.path.isfile(folder_path):
-                print("The folder is a file")
-                return
+    try:
+        entries = os.listdir(folder_path)
+    except OSError as e:
+        print(f"Error reading folder: {e}")
+        return
 
-        elif os.listdir(folder_path) == []:
-                print("The folder is empty")
-                return
+    if not entries:
+        print("The folder is empty")
+        return
 
-        else:
-                for filename in os.listdir(folder_path):
+    for filename in entries:
+        full_path = os.path.join(folder_path, filename)
 
-                        full_path = os.path.join(folder_path, filename)
+        if os.path.isfile(full_path):
+            try:
+                full_size = os.path.getsize(full_path)
+            except OSError:
+                continue
 
-                        if os.path.isfile(full_path):
-                                full_size = os.path.getsize(full_path)
+            if full_size > size:
+                size = full_size
+                file_name = filename
+                file_size = full_size
 
-                                if full_size > size:
-                                        size = full_size
-                                        File_name = filename
-                                        File_size = full_size
+    if file_name is None:
+        print("There is no file in the folder")
+    else:
+        print(f"The biggest file in {folder_path} is {file_name} with size {file_size} bytes")
 
-                if File_name is None:
-                        print("There is no file in the folder")
 
-                else:
-                        print(f"The biggest file in {folder_path} is {File_name} with size {File_size} bytes")
-
-folder(".")
-folder("txt.py")
+if __name__ == "__main__":
+    folder(".")
+    folder("txt.py")

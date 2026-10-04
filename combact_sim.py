@@ -29,10 +29,10 @@ def weapons():
         critical_multiplier = multi()
         total_damage = damage * critical_multiplier
 
-        print(f"you used {choice}!, multiplier was {critical_multiplier} you delt {total_damage} damage")
+        print(f"You used {choice}! Multiplier was {critical_multiplier}, and you dealt {total_damage} damage.")
 
         again = input("choose again? (y/n): ").strip().lower()
-        if again == "n":
+        if again in ("n", "no", "q", "quit"):
             break
 
 

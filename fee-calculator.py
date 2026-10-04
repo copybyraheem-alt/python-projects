@@ -2,23 +2,23 @@ class FeeCalculator:
     @staticmethod
     def discount(amount, percent):
         percent = percent / 100
-        discount_amount= amount * percent
+        discount_amount = amount * percent
         sale_price = amount - discount_amount
         return sale_price
     
     @staticmethod
     def tax(amount, rate):
         rate = rate / 100
-        tax_amount = amount*rate
+        tax_amount = amount * rate
         final = amount + tax_amount
         return final
     
     @staticmethod
     def final_fee(base, discount_percent, tax_rate):
         discount = FeeCalculator.discount(base, discount_percent)
-        Tax = FeeCalculator.tax(discount, tax_rate)
-        final_price = Tax
-        return final_price
+        tax = FeeCalculator.tax(discount, tax_rate)
+        return tax
+
 
 def main():
     try:
@@ -31,6 +31,10 @@ def main():
 
     if base < 0 or discount < 0 or tax < 0:
         print("Invalid input: Values cannot be negative.")
+        return
+
+    if discount > 100:
+        print("Invalid input: Discount cannot exceed 100%.")
         return
 
     print(f"Discounted amount: {FeeCalculator.discount(base, discount):.2f}")

@@ -4,7 +4,7 @@ class Robot:
     def move(self, direction):
         return self.walk(direction)
     def hover(self):
-        return "Robot ties to hover, but robot can't"
+        return "Robot tries to hover, but robot can't"
 
 class Drone:
     def fly(self, direction):
@@ -20,9 +20,7 @@ class SmartCar:
     def move(self, direction):
         return self.drive(direction)
     def hover(self):
-        return "SmartCar ties to hover, but smartar can't"
-
-objs= [Robot(), Drone(), SmartCar()]
+        return "SmartCar tries to hover, but SmartCar can't"
 
 def send_command(machine, direction):
     print("-----------------------")
@@ -35,9 +33,11 @@ def send_advanced_command(machine, direction):
     print(machine.hover())
     print("-----------------------")
 
+if __name__ == "__main__":
+    objs = [Robot(), Drone(), SmartCar()]
 
-for obj in objs:
-    send_command(obj, "Forward")
+    for obj in objs:
+        send_command(obj, "Forward")
 
-for obj in objs:
-    send_advanced_command(obj, "Back")
+    for obj in objs:
+        send_advanced_command(obj, "Back")

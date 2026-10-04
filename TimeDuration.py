@@ -1,22 +1,22 @@
+from functools import total_ordering
+
+
+@total_ordering
 class TimeDuration:
 
     def __init__(self, hours=0, minutes=0, seconds=0):
         
-        if hours<0:
+        if hours < 0 or minutes < 0 or seconds < 0:
             raise ValueError("Time cannot be negative")
-
-        if minutes<0:
-            raise ValueError ("Time cannot be negative")
-
-        if seconds<0:
-            raise ValueError ("Time cannot be negative")
         
-        self.total_seconds= hours* 3600 + minutes * 60 + seconds
+        self.total_seconds = int(round(hours * 3600 + minutes * 60 + seconds))
 
         
     def __str__(self):
         return f"{self.total_seconds//3600:02d}:{(self.total_seconds%3600)//60:02d}:{self.total_seconds%60:02d}"
 
+    def __repr__(self):
+        return f"TimeDuration(hours={self.total_seconds//3600}, minutes={(self.total_seconds%3600)//60}, seconds={self.total_seconds%60})"
 
     def __add__(self, other):
         if not isinstance(other, TimeDuration):
@@ -53,15 +53,14 @@ class TimeDuration:
         return self.__mul__(multiplier)
 
 
-t1=TimeDuration(1, 61, 65)
-t2=TimeDuration(0,30,0)
+if __name__ == "__main__":
+    t1 = TimeDuration(1, 61, 65)
+    t2 = TimeDuration(0, 30, 0)
 
-
-
-print(t1)
-print(t2)
-print(t1+t2)
-print(t1 - t2)
-print (t1 == t2)
-print (t2 < t1)
-print (t2 * 3)
+    print(t1)
+    print(t2)
+    print(t1 + t2)
+    print(t1 - t2)
+    print(t1 == t2)
+    print(t2 < t1)
+    print(t2 * 3)

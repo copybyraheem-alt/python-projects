@@ -1,5 +1,6 @@
 import os
 
+
 def check_expected_files(folder_path, expected_files):
     if not os.path.exists(folder_path):
         print("Folder does not exist")
@@ -26,10 +27,6 @@ def check_expected_files(folder_path, expected_files):
     return {"found": found, "missing": missing}
 
 
-
-check_expected_files(".", ["test.txt", "data.csv", "notes.md", "test.py"])
-check_expected_files("fake_folder", ["file1.txt"])
-
-
-
-    
+if __name__ == "__main__":
+    check_expected_files(".", ["test.txt", "data.csv", "notes.md", "test.py"])
+    check_expected_files("fake_folder", ["file1.txt"])

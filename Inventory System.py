@@ -1,37 +1,34 @@
 class Product:
-    inventory=[]
-    discount_rate=0.0
-    allowed_categories=["Electronics", "Clothing", "Food", "Books"]
+    inventory = []
+    discount_rate = 0.0
+    allowed_categories = ["Electronics", "Clothing", "Food", "Books"]
 
     def __init__(self, name, category, price, stock):
-        self.name=name
-        if category not in Product.allowed_categories:
+        self.name = name
+        if category not in self.allowed_categories:
             raise ValueError("Invalid category")
+        self.category = category
+
+        if price > 0:
+            self.price = float(price)
         else:
-            self.category=category
+            raise ValueError("Invalid price")
 
-        if price>0:
-            self.price= float(price)
+        if stock >= 0:
+            self.stock = int(stock)
         else:
-            raise ValueError("Invalid price")     
-               
-        if stock >=0:
-            self.stock=int(stock)
-        else:
-            raise ValueError("Invalid stock")     
+            raise ValueError("Invalid stock")
 
-        Product.inventory.append(self)
+        self.inventory.append(self)
 
-
-    def get_discounted_price (self):
-        return round(self.price * (1 - Product.discount_rate), 2)
+    def get_discounted_price(self):
+        return round(self.price * (1 - self.discount_rate), 2)
 
     def sell(self, quantity):
-        if quantity>0 and quantity <= self.stock:
-            self.stock-=quantity
-            return True
-        else:
+        if not isinstance(quantity, int) or quantity <= 0 or quantity > self.stock:
             return False
+        self.stock -= quantity
+        return True
 
     @classmethod
     def from_csv(cls, csv_string):
@@ -72,18 +69,19 @@ class Product:
         return matching_names
 
 
-p1 = Product("Python Basic", "Books", 29, 20)
-p2 = Product.from_csv("Wireless Mouse, Electronics , 25.00 , 50")
-p3 = Product.from_dict({"name": "Jeans", "category": "Clothing", "price": 45.0, "stock": 10})
+if __name__ == "__main__":
+    p1 = Product("Python Basic", "Books", 29, 20)
+    p2 = Product.from_csv("Wireless Mouse, Electronics , 25.00 , 50")
+    p3 = Product.from_dict({"name": "Jeans", "category": "Clothing", "price": 45.0, "stock": 10})
 
-print(f"Total inventory value: {Product.total_inventory_value():.2f}")
-Product.set_discount_rate(0.15)
-print(p1.get_discounted_price())
-print(p2.sell(5))
-print(p2.stock)
-print(Product.find_by_category("Electronics"))
+    print(f"Total inventory value: {Product.total_inventory_value():.2f}")
+    Product.set_discount_rate(0.15)
+    print(p1.get_discounted_price())
+    print(p2.sell(5))
+    print(p2.stock)
+    print(Product.find_by_category("Electronics"))
 
-try:
-    invalid_p = Product("Bad Item", "Toys", 10.0, 5)
-except ValueError as e:
-    print(f"Caught expected error: {e}")
+    try:
+        invalid_p = Product("Bad Item", "Toys", 10.0, 5)
+    except ValueError as e:
+        print(f"Caught expected error: {e}")
