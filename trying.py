@@ -1,12 +1,10 @@
-from datetime import datetime
+import datetime
 
 
 
-m=datetime(2009, 7, 28)
-r=datetime(2008, 7, 15)
-
-print(f"born on a {m.strftime('%A')} in the year {m.strftime("%Y")}, in the month of {m.strftime("%B")}")
-print(f"born on a {r.strftime('%A')} in the year {r.strftime("%Y")}, in the month of {r.strftime("%B")}")
-
-print(f"The age gap is {(m-r).days} days")
-
+current_time=datetime.datetime.now()
+future_date= datetime.datetime(2026, 12, 25, 0, 0, 0)
+difference= future_date - current_time
+print(difference)
+print(f"There are {difference.days} days left until Christmas.")
+print(type(difference.days))
