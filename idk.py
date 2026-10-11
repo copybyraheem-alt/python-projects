@@ -1,0 +1,7 @@
+read=int(input("Enter you number: ")
+fact=1
+
+for i in range(fact, read):
+	fact =fact *1
+	print(fact)
+
