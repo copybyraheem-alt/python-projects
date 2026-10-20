@@ -2,78 +2,88 @@ import datetime
 import time
 
 
-def validate_alarm_time(alarm_time_str: str) -> datetime.time:
-    """Validate that the alarm time string follows the 'HH:MM:SS' format.
 
-    Args:
-        alarm_time_str: Time string in 'HH:MM:SS' (24-hour) format.
+class Alarm:
 
-    Returns:
-        datetime.time: The parsed time object.
+    def __init__(self,time_str, label):
+        if not time_str== datetime.datetime.strptime(time_str, "%H:%M:%S"):
+            raise ValueError ("Error")
+        else:
+            self.time_str = time_str
 
-    Raises:
-        ValueError: If the format or time values are invalid.
-    """
-    try:
-        return datetime.datetime.strptime(alarm_time_str, "%H:%M:%S").time()
-    except ValueError:
-        raise ValueError(
-            f"Invalid time format '{alarm_time_str}'. Please use HH:MM:SS (24-hour format, e.g., 07:30:00)."
-        )
+        clean_label=label.strip()
+
+        if clean_label == "":
+            self.label= "General alarm"
+        else:
+            self.label=clean_label
 
 
-def set_alarm(alarm_time_str: str) -> None:
-    """Set an alarm and wait until the target time is reached.
 
-    Args:
-        alarm_time_str: Target alarm time formatted as 'HH:MM:SS'.
-    """
-    alarm_time = validate_alarm_time(alarm_time_str)
 
-    # Determine target datetime (today or tomorrow if the time has already passed)
-    now = datetime.datetime.now()
-    target_datetime = datetime.datetime.combine(now.date(), alarm_time)
 
-    if target_datetime <= now:
-        target_datetime += datetime.timedelta(days=1)
-        print(f"Alarm set for tomorrow at {alarm_time_str}.")
-    else:
-        print(f"Alarm set for today at {alarm_time_str}.")
+class AlarmClock:
 
-    print("Alarm active. Press Ctrl+C to cancel.\n")
+    def __init__(self, log_file="alaram_log.txt"):
+        self.alarm=[]
+        self.log_file=log_file
 
-    try:
-        # Loop until current time reaches or passes the target time
-        while datetime.datetime.now() < target_datetime:
-            current_time = datetime.datetime.now().strftime("%H:%M:%S")
-            # Update the current line in terminal to avoid spamming the screen
-            print(f"\rCurrent Time: {current_time} | Alarm Time: {alarm_time_str}", end="", flush=True)
+
+    def add_alarm(self, time_str, label):
+        try:
+            my_alarm = Alarm(time_str, label)
+
+            self.alarm.append(my_alarm)
+            print("Alarm added successfully")
+            return True
+
+        except ValueError:
+            print("invaild details, please fill correctly")
+            return False
+
+
+    def log_trigger(self, alarm):
+         with open(self.log_file, "a") as f:
+             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+             f.write(f"[{timestamp}] TRIGGERED: {alarm.label} set for {alarm.time_str}\n")
+
+    def run(self):
+        if not self.alarm:
+            print("No Alarm to moniter")
+            return
+        while self.alarm:
+            current_time = (datetime.datetime.now().strftime("%H:%M:%S"))
+            print(current_time)
+
+            for alarm in list(self.alarm):
+                if alarm.time_str==current_time:
+                    print(f" ALARM! {alarm.label} ")
+                    self.log_trigger(alarm)
+                    self.alarm.remove(alarm)
             time.sleep(1)
 
-        # Trigger alarm
-        final_time = datetime.datetime.now().strftime("%H:%M:%S")
-        print(f"\rCurrent Time: {final_time} | Alarm Time: {alarm_time_str}")
-        print("\n" + "=" * 35)
-        print("  WAKE UP!! Alarm ringing!  \a")
-        print("=" * 35)
-
-    except KeyboardInterrupt:
-        print("\n\nAlarm cancelled by user.")
 
 
-# Backward compatibility alias for the previous typo
-set_alaram = set_alarm
-
-
-if __name__ == "__main__":
+if __name__=='__main__':
+    my_clock= AlarmClock()
     while True:
-        try:
-            user_alarm = input("Enter alarm time (HH:MM:SS): ").strip()
-            validate_alarm_time(user_alarm)
-            set_alarm(user_alarm)
+        choose=int(input("How many alarms do you want to set?"))
+
+        if choose > 0:
             break
-        except ValueError as err:
-            print(f"Error: {err}\nPlease try again.\n")
-        except KeyboardInterrupt:
-            print("\nExiting.")
-            break
+        else:
+            print("please write a vaild count")
+
+    for _ in range(choose):
+        while True:
+            time_str = input("Enter alarm time (HH:MM:SS): ")
+            label = input("Enter alarm label: ")
+            if my_clock.add_alarm(time_str, label):
+                break
+
+    my_clock.run()
+
+
+    
+
+
