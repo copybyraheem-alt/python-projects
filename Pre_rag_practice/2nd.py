@@ -1,4 +1,5 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+import json
 
 text = open("let_down.txt", "r").read()
 splitter = RecursiveCharacterTextSplitter(chunk_size=100, chunk_overlap=25, separators=[" ", ""])
@@ -21,3 +22,7 @@ print(all_chunks)
 
 
 
+
+
+with open("chunks.json", "w") as f:
+        json.dump(all_chunks, f, indent=4)
