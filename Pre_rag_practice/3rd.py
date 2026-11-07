@@ -25,16 +25,15 @@ for chunk_id, chunk in enumerate(chunks):
         inverted_index[word][chunk_id]=freq
 
 
-while True:
-    query = input("What do you want to search for? ")
+chunk_id= 4
+word="hanging"
 
-    if query == "q":
-        break
+frequency = inverted_index[word][chunk_id]
+total_words = len(chunks[chunk_id].split())
 
-    matching_chunks = inverted_index.get(query.lower(), {})
+tf = frequency / total_words
 
-    for chunk_id in matching_chunks:
-        print(chunks[chunk_id])
+print(tf)
 
 
 
