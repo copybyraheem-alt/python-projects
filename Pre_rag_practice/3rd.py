@@ -1,3 +1,6 @@
+from collections import Counter
+
+
 chunks=[
     "Transport, motorways, and tramlines",
     "Starting and then stopping, taking off and landing",
@@ -12,22 +15,32 @@ chunks=[
 inverted_index={}
 
 for chunk_id, chunk in enumerate(chunks):
-    words=chunk.lower().split()
-    for word in words:
-        if word not in inverted_index:
-            inverted_index[word]=[]
+    word_counter=Counter(chunk.lower().split())
 
-        if chunk_id not in inverted_index[word]:
-            inverted_index[word].append(chunk_id)
+
+    for word, freq in word_counter.items():
+        if word not in inverted_index:
+            inverted_index[word]={}
+
+        inverted_index[word][chunk_id]=freq
+
 
 while True:
-    query = input("What you wanna search for?: ")
+    query = input("What do you want to search for? ")
+
     if query == "q":
         break
-    else: 
-        matching_chunks = inverted_index.get(query.lower(), [])
 
-        print("=============")
-        for chunk_id in matching_chunks:
-            print(chunks[chunk_id])
-        print("==============")
+    matching_chunks = inverted_index.get(query.lower(), {})
+
+    for chunk_id in matching_chunks:
+        print(chunks[chunk_id])
+
+
+
+
+
+
+
+
+
