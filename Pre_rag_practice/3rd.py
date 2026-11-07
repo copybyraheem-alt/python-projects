@@ -18,9 +18,17 @@ for chunk_id, chunk in enumerate(chunks):
 
         inverted_index[word][chunk_id]=freq
 
-word=input("Search: ").lower()
-total_chunks=len(chunks)
-doc_freq=len(inverted_index[word])
 
-idf= math.log(total_chunks / doc_freq)
-print(idf)
+query = input("Search for a word: ").lower()
+matching_chunks = inverted_index.get(query, {})
+
+
+for chunk_id in matching_chunks:
+    total_words= len(chunks[chunk_id].split())
+    tf= freq / total_words
+
+    idf= math.log(len(chunks)/ len(matching_chunks))
+    score=tf*idf
+    print(chunks[chunk_id], score)
+
+
