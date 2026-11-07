@@ -22,13 +22,20 @@ for chunk_id, chunk in enumerate(chunks):
 query = input("Search for a word: ").lower()
 matching_chunks = inverted_index.get(query, {})
 
-
+results=[]
 for chunk_id in matching_chunks:
     total_words= len(chunks[chunk_id].split())
     tf= freq / total_words
 
     idf= math.log(len(chunks)/ len(matching_chunks))
     score=tf*idf
-    print(chunks[chunk_id], score)
+    results.append((score, chunk_id))
+    
+
+results.sort(reverse=True)
+for score, chunk_id in results:
+    print(score, chunks[chunk_id])
+
+
 
 
