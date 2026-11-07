@@ -16,6 +16,9 @@ for chunk_id, chunk in enumerate(chunks):
         if word not in inverted_index:
             inverted_index[word]={}
 
+        inverted_index[word][chunk_id]=freq
 
-
-print(inverted_index)
+query = input("Search for a word: ").lower()
+matching_chunks = inverted_index.get(query, {})
+for chunk_id in matching_chunks:
+    print(chunks[chunk_id])
